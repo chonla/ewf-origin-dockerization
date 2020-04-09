@@ -42,7 +42,7 @@ IMAGE_NAME="${DOCKERHUB_USER}/origin"
 DOCKERFILE_REPO_BASE="https://raw.githubusercontent.com/chonla/ewf-origin-dockerization/master"
 
 build_from_remote_docker() {
-    dockerfile=$1
+    dockerfile="$1"
     curl "${DOCKERFILE_REPO_BASE}/${dockerfile}" | docker build -
 }
 
