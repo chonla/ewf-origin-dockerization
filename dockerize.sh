@@ -47,7 +47,7 @@ push_image_to_registry() {
     # image will be pushed only password is provided
     if [[ "${DOCKERHUB_PASSWORD}" != "" ]]; then
         echo "[${IMG}] Pushing ${IMG} to registry"
-        
+
         echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USER} --password-stdin"
 
         docker push "${IMG}"
@@ -59,7 +59,7 @@ dockerize() {
     DOCKERFILE=$2
 
     echo "Dockerizing ${IMG} ..."
-    build_from_remote_docker "${DOCKERFILE}"
+    build_from_remote_docker "${IMG}" "${DOCKERFILE}"
     if [ ! $? -eq 0 ]; then
         echo "[${IMG}] Fail to build ${IMG}."
         exit 1
