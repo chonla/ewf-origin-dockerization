@@ -44,6 +44,10 @@
 
 7. Done!
 
+## Build them all
+
+Go to origin package source code and run `curl htts://raw.githubusercontent.com/chonla/ewf-origin-dockerization/master/dockerize.sh | DOCKERHUB_USER=<docker-hub-username> bash`
+
 ## Deploy Origin Package
 
 See [Origin Deployment](https://github.com/energywebfoundation/origin/wiki/Origin-Deployment) document.
