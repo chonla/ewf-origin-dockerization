@@ -23,10 +23,10 @@ echo "All images built with this script will be created and tagged with 'latest'
 echo "These are the expected images:"
 echo ""
 
-echo "- ${DOCKERHUB_USER}/origin"
-echo "- ${DOCKERHUB_USER}/backend"
-echo "- ${DOCKERHUB_USER}/migration-demo"
-echo "- ${DOCKERHUB_USER}/simulator"
+echo "- ${DOCKERHUB_USER}/ewf-origin"
+echo "- ${DOCKERHUB_USER}/origin-backend-app"
+echo "- ${DOCKERHUB_USER}/origin-migration-demo"
+echo "- ${DOCKERHUB_USER}/origin-simulator"
 
 echo ""
 
@@ -74,4 +74,7 @@ if [[ ! -f "package.json" ]]; then
 fi
 
 # Dockerize origin
-dockerize "${DOCKERHUB_USER}/origin" "origin.Dockerfile"
+dockerize "${DOCKERHUB_USER}/ewf-origin" "origin.Dockerfile"
+dockerize "${DOCKERHUB_USER}/origin-migration-demo" "migration-demo.Dockerfile"
+dockerize "${DOCKERHUB_USER}/origin-backend-app" "migration-demo.Dockerfile"
+dockerize "${DOCKERHUB_USER}/origin-simulator" "simulator.Dockerfile"
