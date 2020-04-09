@@ -44,6 +44,7 @@ DOCKERFILE_REPO_BASE="https://raw.githubusercontent.com/chonla/ewf-origin-docker
 build_from_remote_docker() {
     DOCKERFILE="$1"
     DOCKERFILE_REPO="${DOCKERFILE_REPO_BASE}/${DOCKERFILE}"
+    echo "[${DOCKERHUB_USER}/origin] Building image from: ${DOCKERFILE_REPO}"
     curl "${DOCKERFILE_REPO}" | docker build -
 }
 
