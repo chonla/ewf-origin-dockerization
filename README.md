@@ -46,7 +46,7 @@
 
 ## Build them all
 
-Go to origin package source code and run `curl htts://raw.githubusercontent.com/chonla/ewf-origin-dockerization/master/dockerize.sh | DOCKERHUB_USER=<docker-hub-username> bash`
+Go to origin package source code and run `curl https://raw.githubusercontent.com/chonla/ewf-origin-dockerization/master/dockerize.sh | DOCKERHUB_USER=<docker-hub-username> bash`
 
 ## Deploy Origin Package
 

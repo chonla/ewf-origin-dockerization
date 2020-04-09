@@ -39,8 +39,14 @@ fi
 
 VERSION="latest"
 IMAGE_NAME="${DOCKERHUB_USER}/origin"
+DOCKERFILE_REPO_BASE="https://raw.githubusercontent.com/chonla/ewf-origin-dockerization/master"
 
-docker build -t ${IMAGE_NAME}:${VERSION} -f origin.Dockerfile .
+build_from_remote_docker() {
+    $dockerfile=$1
+    curl "${DOCKERFILE_REPO_BASE}/${dockerfile}" | docker build -
+}
+
+build_from_remote_docker "origin.Dockerfile"
 
 if [ ! $? -eq 0 ]; then
     echo "[${DOCKERHUB_USER}/origin] Fail to build ${DOCKERHUB_USER}/origin."
