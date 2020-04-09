@@ -30,27 +30,48 @@ echo "- ${DOCKERHUB_USER}/simulator"
 
 echo ""
 
-# Dockerize origin
-echo "Dockerizing ${DOCKERHUB_USER}/origin ..."
-if [[ ! -f "package.json" ]]; then
-    echo "[${DOCKERHUB_USER}/origin] I expect you to run this script in origin project. No file 'package.json' found."
-    exit 1
-fi
-
 VERSION="latest"
-IMAGE_NAME="${DOCKERHUB_USER}/origin"
 DOCKERFILE_REPO_BASE="https://raw.githubusercontent.com/chonla/ewf-origin-dockerization/master"
 
 build_from_remote_docker() {
-    DOCKERFILE="$1"
+    IMG="$1"
+    DOCKERFILE="$2"
     DOCKERFILE_REPO="${DOCKERFILE_REPO_BASE}/${DOCKERFILE}"
-    echo "[${DOCKERHUB_USER}/origin] Building image from: ${DOCKERFILE_REPO}"
+    echo "[${IMG}] Building image from: ${DOCKERFILE_REPO}"
     curl "${DOCKERFILE_REPO}" | docker build -
 }
 
-build_from_remote_docker "origin.Dockerfile"
+push_image_to_registry() {
+    IMG=$1
 
-if [ ! $? -eq 0 ]; then
-    echo "[${DOCKERHUB_USER}/origin] Fail to build ${DOCKERHUB_USER}/origin."
+    # image will be pushed only password is provided
+    if [[ "${DOCKERHUB_PASSWORD}" != "" ]]; then
+        echo "[${IMG}] Pushing ${IMG} to registry"
+        
+        echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USER} --password-stdin"
+
+        docker push "${IMG}"
+    fi
+}
+
+dockerize() {
+    IMG=$1
+    DOCKERFILE=$2
+
+    echo "Dockerizing ${IMG} ..."
+    build_from_remote_docker "${DOCKERFILE}"
+    if [ ! $? -eq 0 ]; then
+        echo "[${IMG}] Fail to build ${IMG}."
+        exit 1
+    fi
+    push_image_to_registry "${IMG}"
+}
+
+# Validating workspace
+if [[ ! -f "package.json" ]]; then
+    echo "[${IMAGE_NAME}] I expect you to run this script in origin project. No file 'package.json' found."
     exit 1
 fi
+
+# Dockerize origin
+dockerize "${DOCKERHUB_USER}/origin" "origin.Dockerfile"
