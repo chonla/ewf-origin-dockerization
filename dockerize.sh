@@ -38,7 +38,7 @@ build_from_remote_docker() {
     DOCKERFILE="$2"
     DOCKERFILE_REPO="${DOCKERFILE_REPO_BASE}/${DOCKERFILE}"
     echo "[${IMG}] Building image from: ${DOCKERFILE_REPO}"
-    curl "${DOCKERFILE_REPO}" | docker build -
+    curl "${DOCKERFILE_REPO}" | docker build -t ${IMG}:latest -
 }
 
 push_image_to_registry() {
@@ -46,11 +46,11 @@ push_image_to_registry() {
 
     # image will be pushed only password is provided
     if [[ "${DOCKERHUB_PASSWORD}" != "" ]]; then
-        echo "[${IMG}] Pushing ${IMG} to registry"
+        echo "[${IMG}] Pushing ${IMG}:latest to registry"
 
-        echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USER} --password-stdin"
+        echo "${DOCKERHUB_PASSWORD}" | docker login -u "${DOCKERHUB_USER}" --password-stdin
 
-        docker push "${IMG}"
+        docker push "${IMG}:latest"
     fi
 }
 
