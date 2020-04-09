@@ -78,3 +78,5 @@ dockerize "${DOCKERHUB_USER}/ewf-origin" "origin.Dockerfile"
 dockerize "${DOCKERHUB_USER}/origin-migration-demo" "migration-demo.Dockerfile"
 dockerize "${DOCKERHUB_USER}/origin-backend-app" "migration-demo.Dockerfile"
 dockerize "${DOCKERHUB_USER}/origin-simulator" "simulator.Dockerfile"
+
+echo "Done"
